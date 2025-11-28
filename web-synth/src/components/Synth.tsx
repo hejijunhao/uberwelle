@@ -22,32 +22,39 @@ export function Synth() {
     <div className="synth-root">
       <header className="synth-header">
         <h1>Überwelle</h1>
-        <p className="synth-subtitle">Web Synthesizer V1</p>
+        <p className="synth-subtitle">Polyphonic Web Synthesizer</p>
+        <p className="synth-model-badge">Model 001</p>
       </header>
 
-      <ControlPanel
-        waveform={waveform}
-        attack={attack}
-        release={release}
-        masterGain={masterGain}
-        onWaveformChange={updateWaveform}
-        onAttackChange={updateAttack}
-        onReleaseChange={updateRelease}
-        onMasterGainChange={updateMasterGain}
-      />
+      <div className="synth-housing">
+        <div className="synth-inner">
+          <ControlPanel
+            waveform={waveform}
+            attack={attack}
+            release={release}
+            masterGain={masterGain}
+            onWaveformChange={updateWaveform}
+            onAttackChange={updateAttack}
+            onReleaseChange={updateRelease}
+            onMasterGainChange={updateMasterGain}
+          />
 
-      <Keyboard
-        notes={NOTES}
-        onNoteDown={(id, freq) => noteOn(id, freq)}
-        onNoteUp={(id) => noteOff(id)}
-      />
+          <Keyboard
+            notes={NOTES}
+            onNoteDown={(id, freq) => noteOn(id, freq)}
+            onNoteUp={(id) => noteOff(id)}
+          />
+        </div>
+      </div>
 
       <footer className="synth-footer">
         <p>
-          🎹 Click keys or use your keyboard: <kbd>Z</kbd>-<kbd>M</kbd> (lower octave),{' '}
-          <kbd>Q</kbd>-<kbd>I</kbd> (upper octave)
+          <kbd>Z</kbd>–<kbd>M</kbd> lower octave · <kbd>Q</kbd>–<kbd>I</kbd> upper octave
         </p>
       </footer>
+
+      {/* Noise texture overlay for that analog feel */}
+      <div className="noise-overlay" aria-hidden="true" />
     </div>
   )
 }

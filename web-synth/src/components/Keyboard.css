@@ -1,76 +1,214 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   KEYBOARD — Matte keys with neon glow active states
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .keyboard {
-  --white-key-width: 50px;
-  --white-key-height: 180px;
-  --black-key-width: 30px;
-  --black-key-height: 110px;
+  --white-key-width: 52px;
+  --white-key-height: 200px;
+  --black-key-width: 32px;
+  --black-key-height: 125px;
 
   position: relative;
   display: inline-block;
-  margin-top: 20px;
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  background: var(--color-black);
+  border-radius: var(--radius-md);
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.8),
+    0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .white-keys {
   display: flex;
+  position: relative;
 }
 
 .black-keys {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: var(--space-4);
+  left: var(--space-4);
   pointer-events: none;
 }
 
+/* ─── Base Key Styles ────────────────────────────────────────────────────── */
 .key {
   border: none;
   cursor: pointer;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 10px;
-  font-weight: bold;
-  transition: background-color 0.05s ease;
+  padding-bottom: 12px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  user-select: none;
+  transition:
+    background 0.08s ease,
+    box-shadow 0.15s ease,
+    transform 0.08s ease;
 }
 
-.white-key {
-  width: var(--white-key-width);
-  height: var(--white-key-height);
-  background: linear-gradient(to bottom, #f8f8f8 0%, #e8e8e8 100%);
-  border: 1px solid #999;
-  border-radius: 0 0 5px 5px;
-  margin-right: -1px;
-  color: #333;
-  font-size: 12px;
-}
-
-.white-key:hover {
-  background: linear-gradient(to bottom, #fff 0%, #f0f0f0 100%);
-}
-
-.white-key.active {
-  background: linear-gradient(to bottom, #6ee7b7 0%, #34d399 100%);
-}
-
-.black-key {
-  position: absolute;
-  width: var(--black-key-width);
-  height: var(--black-key-height);
-  background: linear-gradient(to bottom, #333 0%, #111 100%);
-  border: 1px solid #000;
-  border-radius: 0 0 4px 4px;
-  color: #fff;
-  font-size: 10px;
-  z-index: 1;
-  pointer-events: auto;
-}
-
-.black-key:hover {
-  background: linear-gradient(to bottom, #444 0%, #222 100%);
-}
-
-.black-key.active {
-  background: linear-gradient(to bottom, #059669 0%, #047857 100%);
+.key:focus {
+  outline: none;
 }
 
 .key-label {
   user-select: none;
+  pointer-events: none;
+}
+
+/* ─── White Keys ─────────────────────────────────────────────────────────── */
+.white-key {
+  width: var(--white-key-width);
+  height: var(--white-key-height);
+  /* Matte ivory — not glossy */
+  background:
+    linear-gradient(to bottom,
+      #f0ece8 0%,
+      #e8e4e0 5%,
+      #e5e1dc 50%,
+      #ddd9d4 95%,
+      #d0ccc7 100%
+    );
+  border: 1px solid #b8b4af;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  margin-right: 2px;
+  color: var(--color-text-tertiary);
+  font-size: var(--text-xs);
+  box-shadow:
+    inset 0 -4px 8px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Subtle top bevel */
+.white-key::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
+  border-radius: 0;
+  opacity: 0.5;
+}
+
+.white-key:last-child {
+  margin-right: 0;
+}
+
+.white-key:hover {
+  background:
+    linear-gradient(to bottom,
+      #f5f2ee 0%,
+      #edebe7 5%,
+      #eae7e3 50%,
+      #e2dfdb 95%,
+      #d8d5d0 100%
+    );
+}
+
+.white-key:active,
+.white-key.active {
+  background:
+    linear-gradient(to bottom,
+      #00ffaa 0%,
+      #00e699 30%,
+      #00cc88 70%,
+      #00b377 100%
+    );
+  border-color: #00aa77;
+  color: var(--color-black);
+  font-weight: 700;
+  box-shadow:
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(0, 255, 170, 0.6),
+    0 0 30px rgba(0, 255, 170, 0.4),
+    0 0 50px rgba(0, 255, 170, 0.2);
+  transform: translateY(2px);
+}
+
+/* ─── Black Keys ─────────────────────────────────────────────────────────── */
+.black-key {
+  position: absolute;
+  width: var(--black-key-width);
+  height: var(--black-key-height);
+  /* Deep matte black with subtle texture feel */
+  background:
+    linear-gradient(to bottom,
+      #2a2a2a 0%,
+      #1f1f1f 10%,
+      #181818 50%,
+      #0f0f0f 90%,
+      #080808 100%
+    );
+  border: 1px solid #0a0a0a;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  color: var(--color-text-tertiary);
+  font-size: 9px;
+  z-index: 1;
+  pointer-events: auto;
+  box-shadow:
+    inset 0 -6px 12px rgba(0, 0, 0, 0.5),
+    0 6px 12px rgba(0, 0, 0, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Highlight edge on black keys */
+.black-key::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1px;
+  right: 1px;
+  height: 2px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+}
+
+.black-key:hover {
+  background:
+    linear-gradient(to bottom,
+      #333333 0%,
+      #282828 10%,
+      #202020 50%,
+      #181818 90%,
+      #101010 100%
+    );
+}
+
+.black-key:active,
+.black-key.active {
+  background:
+    linear-gradient(to bottom,
+      #00cc88 0%,
+      #00b377 30%,
+      #009966 70%,
+      #008055 100%
+    );
+  border-color: #006644;
+  color: var(--color-black);
+  font-weight: 700;
+  box-shadow:
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(0, 255, 170, 0.7),
+    0 0 25px rgba(0, 255, 170, 0.5),
+    0 0 40px rgba(0, 255, 170, 0.3);
+  transform: translateY(2px);
+}
+
+/* ─── Octave Separator ───────────────────────────────────────────────────── */
+.keyboard .octave-separator {
+  width: 1px;
+  height: var(--white-key-height);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-border-strong) 20%,
+    var(--color-border-strong) 80%,
+    transparent 100%
+  );
+  margin: 0 1px;
 }

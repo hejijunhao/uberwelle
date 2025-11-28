@@ -1,49 +1,151 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   SYNTH ROOT — Main Container & Header
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .synth-root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
+  justify-content: center;
+  padding: var(--space-10) var(--space-5);
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 255, 170, 0.03) 0%, transparent 50%),
+    var(--color-void);
+  position: relative;
 }
 
+/* ─── Header ─────────────────────────────────────────────────────────────── */
 .synth-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: var(--space-8);
 }
 
 .synth-header h1 {
-  font-size: 3rem;
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(135deg, #6ee7b7 0%, #34d399 50%, #10b981 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 2px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--color-glow-primary);
+  text-shadow:
+    0 0 10px var(--color-glow-primary),
+    0 0 30px rgba(0, 255, 170, 0.5),
+    0 0 60px rgba(0, 255, 170, 0.3);
+  position: relative;
+}
+
+/* Subtle flicker animation for the title */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
+}
+
+.synth-header h1 {
+  animation: flicker 8s infinite;
 }
 
 .synth-subtitle {
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-3);
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
+  font-weight: 500;
 }
 
+/* ─── Main Synth Housing ─────────────────────────────────────────────────── */
+.synth-housing {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Wood side panels (Moog tribute) */
+.synth-housing::before,
+.synth-housing::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  background: linear-gradient(
+    180deg,
+    var(--color-wood-light) 0%,
+    var(--color-wood) 20%,
+    var(--color-wood-dark) 50%,
+    var(--color-wood) 80%,
+    var(--color-wood-light) 100%
+  );
+  z-index: 10;
+}
+
+.synth-housing::before {
+  left: 0;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.synth-housing::after {
+  right: 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+/* Inner content area (between wood panels) */
+.synth-inner {
+  position: relative;
+  z-index: 5;
+  padding: 0 var(--space-4);
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
 .synth-footer {
-  margin-top: 30px;
+  margin-top: var(--space-8);
   text-align: center;
-  color: #666;
-  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 1px;
 }
 
 .synth-footer kbd {
-  background: #333;
-  border: 1px solid #444;
-  border-radius: 4px;
-  padding: 2px 6px;
-  font-family: monospace;
-  font-size: 0.8rem;
-  color: #ccc;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin: 0 2px;
+}
+
+/* ─── Model Badge ────────────────────────────────────────────────────────── */
+.synth-model-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: var(--space-2);
+  opacity: 0.6;
+}
+
+.synth-model-badge::before {
+  content: '[ ';
+}
+
+.synth-model-badge::after {
+  content: ' ]';
 }
