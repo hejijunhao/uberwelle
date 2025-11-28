@@ -1,0 +1,76 @@
+.keyboard {
+  --white-key-width: 50px;
+  --white-key-height: 180px;
+  --black-key-width: 30px;
+  --black-key-height: 110px;
+
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.white-keys {
+  display: flex;
+}
+
+.black-keys {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.key {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+  font-weight: bold;
+  transition: background-color 0.05s ease;
+}
+
+.white-key {
+  width: var(--white-key-width);
+  height: var(--white-key-height);
+  background: linear-gradient(to bottom, #f8f8f8 0%, #e8e8e8 100%);
+  border: 1px solid #999;
+  border-radius: 0 0 5px 5px;
+  margin-right: -1px;
+  color: #333;
+  font-size: 12px;
+}
+
+.white-key:hover {
+  background: linear-gradient(to bottom, #fff 0%, #f0f0f0 100%);
+}
+
+.white-key.active {
+  background: linear-gradient(to bottom, #6ee7b7 0%, #34d399 100%);
+}
+
+.black-key {
+  position: absolute;
+  width: var(--black-key-width);
+  height: var(--black-key-height);
+  background: linear-gradient(to bottom, #333 0%, #111 100%);
+  border: 1px solid #000;
+  border-radius: 0 0 4px 4px;
+  color: #fff;
+  font-size: 10px;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.black-key:hover {
+  background: linear-gradient(to bottom, #444 0%, #222 100%);
+}
+
+.black-key.active {
+  background: linear-gradient(to bottom, #059669 0%, #047857 100%);
+}
+
+.key-label {
+  user-select: none;
+}
