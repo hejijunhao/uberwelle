@@ -1,22 +1,23 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   KEYBOARD — Matte keys with neon glow active states
+   KEYBOARD — Compact Moog-style keyboard at bottom
+   Smaller keys with neon glow active states
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .keyboard {
-  --white-key-width: 52px;
-  --white-key-height: 200px;
-  --black-key-width: 32px;
-  --black-key-height: 125px;
+  --white-key-width: 36px;
+  --white-key-height: 120px;
+  --black-key-width: 24px;
+  --black-key-height: 75px;
 
   position: relative;
   display: inline-block;
-  margin-top: var(--space-6);
-  padding: var(--space-4);
+  padding: var(--space-3);
   background: var(--color-black);
   border-radius: var(--radius-md);
   box-shadow:
     inset 0 2px 8px rgba(0, 0, 0, 0.8),
     0 4px 20px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
 }
 
 .white-keys {
@@ -26,8 +27,8 @@
 
 .black-keys {
   position: absolute;
-  top: var(--space-4);
-  left: var(--space-4);
+  top: var(--space-3);
+  left: var(--space-3);
   pointer-events: none;
 }
 
@@ -38,7 +39,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 12px;
+  padding-bottom: 8px;
   font-family: var(--font-mono);
   font-weight: 500;
   user-select: none;
@@ -55,6 +56,8 @@
 .key-label {
   user-select: none;
   pointer-events: none;
+  font-size: 8px;
+  opacity: 0.6;
 }
 
 /* ─── White Keys ─────────────────────────────────────────────────────────── */
@@ -72,13 +75,12 @@
     );
   border: 1px solid #b8b4af;
   border-top: none;
-  border-radius: 0 0 6px 6px;
-  margin-right: 2px;
+  border-radius: 0 0 4px 4px;
+  margin-right: 1px;
   color: var(--color-text-tertiary);
-  font-size: var(--text-xs);
   box-shadow:
-    inset 0 -4px 8px rgba(0, 0, 0, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.3);
+    inset 0 -3px 6px rgba(0, 0, 0, 0.1),
+    0 3px 6px rgba(0, 0, 0, 0.3);
   position: relative;
 }
 
@@ -89,7 +91,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2px;
   background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
   border-radius: 0;
   opacity: 0.5;
@@ -124,10 +126,15 @@
   font-weight: 700;
   box-shadow:
     inset 0 -2px 4px rgba(0, 0, 0, 0.2),
-    0 0 15px rgba(0, 255, 170, 0.6),
-    0 0 30px rgba(0, 255, 170, 0.4),
-    0 0 50px rgba(0, 255, 170, 0.2);
-  transform: translateY(2px);
+    0 0 12px rgba(0, 255, 170, 0.6),
+    0 0 25px rgba(0, 255, 170, 0.4),
+    0 0 40px rgba(0, 255, 170, 0.2);
+  transform: translateY(1px);
+}
+
+.white-key:active .key-label,
+.white-key.active .key-label {
+  opacity: 1;
 }
 
 /* ─── Black Keys ─────────────────────────────────────────────────────────── */
@@ -146,14 +153,14 @@
     );
   border: 1px solid #0a0a0a;
   border-top: none;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 4px 4px;
   color: var(--color-text-tertiary);
-  font-size: 9px;
+  font-size: 7px;
   z-index: 1;
   pointer-events: auto;
   box-shadow:
-    inset 0 -6px 12px rgba(0, 0, 0, 0.5),
-    0 6px 12px rgba(0, 0, 0, 0.6),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.5),
+    0 5px 10px rgba(0, 0, 0, 0.6),
     0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -193,22 +200,41 @@
   font-weight: 700;
   box-shadow:
     inset 0 -3px 6px rgba(0, 0, 0, 0.3),
-    0 0 12px rgba(0, 255, 170, 0.7),
-    0 0 25px rgba(0, 255, 170, 0.5),
-    0 0 40px rgba(0, 255, 170, 0.3);
-  transform: translateY(2px);
+    0 0 10px rgba(0, 255, 170, 0.7),
+    0 0 20px rgba(0, 255, 170, 0.5),
+    0 0 35px rgba(0, 255, 170, 0.3);
+  transform: translateY(1px);
 }
 
-/* ─── Octave Separator ───────────────────────────────────────────────────── */
-.keyboard .octave-separator {
-  width: 1px;
-  height: var(--white-key-height);
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--color-border-strong) 20%,
-    var(--color-border-strong) 80%,
-    transparent 100%
-  );
-  margin: 0 1px;
+.black-key:active .key-label,
+.black-key.active .key-label {
+  opacity: 1;
+}
+
+/* ─── Responsive keyboard ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .keyboard {
+    --white-key-width: 28px;
+    --white-key-height: 90px;
+    --black-key-width: 18px;
+    --black-key-height: 55px;
+    padding: var(--space-2);
+  }
+
+  .key-label {
+    font-size: 6px;
+  }
+}
+
+@media (max-width: 500px) {
+  .keyboard {
+    --white-key-width: 22px;
+    --white-key-height: 70px;
+    --black-key-width: 14px;
+    --black-key-height: 42px;
+  }
+
+  .key-label {
+    display: none;
+  }
 }

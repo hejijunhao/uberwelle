@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   SYNTH ROOT — Main Container & Header
+   SYNTH ROOT — Modular Synthesizer Layout
+   Moog-style housing with multiple module sections
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .synth-root {
@@ -7,10 +8,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-10) var(--space-5);
+  padding: var(--space-6) var(--space-4);
   min-height: 100vh;
   background:
     radial-gradient(ellipse at 50% 0%, rgba(0, 255, 170, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 100%, rgba(255, 107, 53, 0.02) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 100%, rgba(0, 212, 255, 0.02) 0%, transparent 40%),
     var(--color-void);
   position: relative;
 }
@@ -18,12 +21,12 @@
 /* ─── Header ─────────────────────────────────────────────────────────────── */
 .synth-header {
   text-align: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .synth-header h1 {
   font-family: var(--font-display);
-  font-size: var(--text-4xl);
+  font-size: var(--text-3xl);
   font-weight: 700;
   margin: 0;
   letter-spacing: 6px;
@@ -54,7 +57,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-tertiary);
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
   text-transform: uppercase;
   letter-spacing: 4px;
   font-weight: 500;
@@ -65,10 +68,12 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: var(--space-6);
+  padding: var(--space-5);
   box-shadow: var(--shadow-deep);
   position: relative;
   overflow: hidden;
+  max-width: 1200px;
+  width: 100%;
 }
 
 /* Wood side panels (Moog tribute) */
@@ -78,7 +83,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 16px;
+  width: 14px;
   background: linear-gradient(
     180deg,
     var(--color-wood-light) 0%,
@@ -109,9 +114,34 @@
   padding: 0 var(--space-4);
 }
 
+/* ─── Modules Grid ───────────────────────────────────────────────────────── */
+.synth-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+/* Layout helpers within modules */
+.env-knobs {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.patch-row {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
 /* ─── Footer ─────────────────────────────────────────────────────────────── */
 .synth-footer {
-  margin-top: var(--space-8);
+  margin-top: var(--space-6);
   text-align: center;
   color: var(--color-text-tertiary);
   font-family: var(--font-mono);
@@ -124,7 +154,7 @@
   border: 1px solid var(--color-border);
   border-bottom: 2px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
-  padding: 2px 8px;
+  padding: 2px 6px;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
@@ -148,4 +178,40 @@
 
 .synth-model-badge::after {
   content: ' ]';
+}
+
+/* ─── Responsive adjustments ─────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .synth-modules {
+    gap: var(--space-3);
+  }
+
+  .env-knobs {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 768px) {
+  .synth-root {
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .synth-header h1 {
+    font-size: var(--text-2xl);
+    letter-spacing: 4px;
+  }
+
+  .synth-housing {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .synth-housing::before,
+  .synth-housing::after {
+    width: 10px;
+  }
+
+  .synth-inner {
+    padding: 0 var(--space-2);
+  }
 }
