@@ -24,15 +24,20 @@ export function Knob({
   formatValue,
   onChange,
   size = 'medium',
-  color = 'primary',
 }: KnobProps) {
   const knobRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState(false)
   const dragStartRef = useRef<{ y: number; value: number } | null>(null)
 
-  // Convert value to rotation angle (270° sweep from -135° to +135°)
+  // Normalized value 0-1
   const normalized = (value - min) / (max - min)
-  const rotation = -135 + normalized * 270
+
+  // SVG arc calculation (270° sweep)
+  const radius = size === 'small' ? 20 : size === 'large' ? 36 : 28
+  const strokeWidth = size === 'small' ? 3 : size === 'large' ? 5 : 4
+  const circumference = 2 * Math.PI * radius
+  const arcLength = circumference * 0.75 // 270 degrees
+  const offset = arcLength * (1 - normalized)
 
   const displayValue = formatValue ? formatValue(value) : value.toFixed(2)
 
@@ -51,11 +56,9 @@ export function Knob({
 
       const deltaY = dragStartRef.current.y - e.clientY
       const range = max - min
-      // 200px of drag = full range
-      const sensitivity = range / 200
+      const sensitivity = range / 150
       const newValue = dragStartRef.current.value + deltaY * sensitivity
 
-      // Clamp and round to step
       const clamped = Math.max(min, Math.min(max, newValue))
       const stepped = Math.round(clamped / step) * step
       onChange(stepped)
@@ -68,13 +71,11 @@ export function Knob({
     dragStartRef.current = null
   }, [])
 
-  // Double-click to reset to center/default
   const handleDoubleClick = useCallback(() => {
     const center = (min + max) / 2
     onChange(center)
   }, [min, max, onChange])
 
-  // Wheel support for fine-tuning
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
       e.preventDefault()
@@ -97,36 +98,47 @@ export function Knob({
     }
   }, [isDragging, handleMouseMove, handleMouseUp])
 
+  const svgSize = size === 'small' ? 48 : size === 'large' ? 80 : 64
+  const center = svgSize / 2
+
   return (
     <div className={`knob-container knob-${size}`}>
       <div className="knob-label">{label}</div>
       <div
         ref={knobRef}
-        className={`knob knob-color-${color} ${isDragging ? 'dragging' : ''}`}
+        className={`knob ${isDragging ? 'dragging' : ''}`}
         onMouseDown={handleMouseDown}
         onDoubleClick={handleDoubleClick}
         onWheel={handleWheel}
       >
-        {/* Tick marks around the knob */}
-        <div className="knob-ticks">
-          {[...Array(11)].map((_, i) => (
-            <div
-              key={i}
-              className={`knob-tick ${i === 0 || i === 10 ? 'major' : ''} ${i === 5 ? 'center' : ''}`}
-              style={{ transform: `rotate(${-135 + i * 27}deg)` }}
-            />
-          ))}
-        </div>
+        {/* SVG Arc indicator */}
+        <svg className="knob-arc" viewBox={`0 0 ${svgSize} ${svgSize}`}>
+          {/* Track (background arc) */}
+          <circle
+            className="arc-track"
+            cx={center}
+            cy={center}
+            r={radius}
+            strokeWidth={strokeWidth}
+            strokeDasharray={`${arcLength} ${circumference}`}
+            strokeDashoffset={0}
+            transform={`rotate(135 ${center} ${center})`}
+          />
+          {/* Value arc */}
+          <circle
+            className="arc-value"
+            cx={center}
+            cy={center}
+            r={radius}
+            strokeWidth={strokeWidth}
+            strokeDasharray={`${arcLength} ${circumference}`}
+            strokeDashoffset={offset}
+            transform={`rotate(135 ${center} ${center})`}
+          />
+        </svg>
 
-        {/* The rotatable knob body */}
-        <div
-          className="knob-body"
-          style={{ transform: `rotate(${rotation}deg)` }}
-        >
-          <div className="knob-indicator" />
-        </div>
-
-        {/* Center cap */}
+        {/* Center display */}
+        <div className="knob-body" />
         <div className="knob-cap" />
       </div>
       <div className="knob-value">

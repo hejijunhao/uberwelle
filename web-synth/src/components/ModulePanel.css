@@ -1,50 +1,29 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   MODULE PANEL — Modular synth section container
-   Each synthesis section gets its own labeled, bordered panel
+   MODULE PANEL v2 — System UI / Terminal block
+   Sharp edges, indexed headers, grid-like structure
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .module-panel {
-  background: var(--color-surface-raised);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4) var(--space-4);
+  padding: 0;
   position: relative;
-  /* Recessed panel effect */
-  box-shadow:
-    inset 0 1px 3px rgba(0, 0, 0, 0.3),
-    0 2px 4px rgba(0, 0, 0, 0.2);
+  min-width: 140px;
 }
 
-/* Top edge highlight */
-.module-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: var(--space-4);
-  right: var(--space-4);
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(255, 255, 255, 0.05) 20%,
-    rgba(255, 255, 255, 0.05) 80%,
-    transparent 100%
-  );
-}
-
-/* ─── Module Header ─────────────────────────────────────────────────────── */
+/* ─── Module Header — Index-style ───────────────────────────────────────── */
 .module-header {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-3);
-  padding-bottom: var(--space-2);
-  border-bottom: 1px solid var(--color-border-subtle);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-gray-900);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .module-title {
-  font-family: var(--font-display);
-  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
   font-weight: 600;
   color: var(--color-text-secondary);
   text-transform: uppercase;
@@ -52,126 +31,86 @@
   margin: 0;
 }
 
-/* ─── Status LED ────────────────────────────────────────────────────────── */
+/* ─── Status Indicator — Minimal square ─────────────────────────────────── */
 .module-led {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  background: var(--color-gray-700);
   flex-shrink: 0;
 }
 
-.led-primary {
-  background: var(--color-glow-primary);
-  box-shadow: 0 0 6px var(--color-glow-primary);
+/* Active states */
+.module-panel-primary .module-led,
+.module-panel-secondary .module-led,
+.module-panel-hot .module-led,
+.module-panel-cool .module-led {
+  background: var(--color-white);
 }
 
-.led-secondary {
-  background: var(--color-glow-secondary);
-  box-shadow: 0 0 6px var(--color-glow-secondary);
-}
-
-.led-hot {
-  background: var(--color-glow-hot);
-  box-shadow: 0 0 6px var(--color-glow-hot);
-}
-
-.led-cool {
-  background: var(--color-glow-cool);
-  box-shadow: 0 0 6px var(--color-glow-cool);
-}
-
-/* Color accent on panel border */
-.module-panel-primary {
-  border-top: 2px solid var(--color-glow-primary);
-}
-
-.module-panel-secondary {
-  border-top: 2px solid var(--color-glow-secondary);
-}
-
-.module-panel-hot {
-  border-top: 2px solid var(--color-glow-hot);
-}
-
+/* No colored borders in brutalist design */
+.module-panel-primary,
+.module-panel-secondary,
+.module-panel-hot,
 .module-panel-cool {
-  border-top: 2px solid var(--color-glow-cool);
+  border-top: 1px solid var(--color-border);
 }
 
 /* ─── Module Content ────────────────────────────────────────────────────── */
 .module-content {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  gap: var(--space-3);
   justify-content: center;
+  padding: var(--space-4);
 }
 
-/* ─── Patch Points (Jack Sockets) ───────────────────────────────────────── */
+/* ─── Patch Points — Data I/O ports ─────────────────────────────────────── */
 .patch-point {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .patch-jack {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%,
-      #1a1a1a 0%,
-      #0a0a0a 60%,
-      #1a1a1a 100%
-    );
-  border: 2px solid #333;
-  box-shadow:
-    inset 0 2px 4px rgba(0, 0, 0, 0.8),
-    0 1px 2px rgba(0, 0, 0, 0.5);
+  width: 10px;
+  height: 10px;
+  background: var(--color-black);
+  border: 1px solid var(--color-gray-600);
   position: relative;
 }
 
-/* Inner contact ring */
 .patch-jack::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 40% 40%,
-      #4a4a4a 0%,
-      #2a2a2a 50%,
-      #1a1a1a 100%
-    );
-  border: 1px solid #555;
-}
-
-.patch-input .patch-jack {
-  border-color: #444;
+  background: var(--color-gray-600);
 }
 
 .patch-output .patch-jack {
-  border-color: var(--color-glow-primary-dim);
-  box-shadow:
-    inset 0 2px 4px rgba(0, 0, 0, 0.8),
-    0 0 4px rgba(0, 255, 170, 0.2);
+  border-color: var(--color-white);
+}
+
+.patch-output .patch-jack::after {
+  background: var(--color-white);
 }
 
 .patch-label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8px;
   color: var(--color-text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
-/* ─── Layout helpers for module content ─────────────────────────────────── */
+/* ─── Layout helpers ────────────────────────────────────────────────────── */
 .module-row {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-3);
   align-items: flex-end;
   width: 100%;
   justify-content: center;
@@ -186,13 +125,7 @@
 
 .module-divider {
   width: 1px;
-  height: 60px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--color-border) 20%,
-    var(--color-border) 80%,
-    transparent 100%
-  );
-  margin: 0 var(--space-2);
+  height: 48px;
+  background: var(--color-border);
+  margin: 0 var(--space-1);
 }

@@ -1,6 +1,6 @@
 import { useSynth } from '../hooks/useSynth'
 import { Keyboard } from './Keyboard'
-import { ModulePanel, PatchPoint } from './ModulePanel'
+import { ModulePanel } from './ModulePanel'
 import { Knob } from './Knob'
 import { Switch, ToggleGroup } from './Switch'
 import { NOTES } from '../audio/noteFrequencies'
@@ -18,26 +18,23 @@ const FILTER_TYPE_OPTIONS: { value: FilterType; label: string }[] = [
   { value: 'lowpass', label: 'LP' },
   { value: 'highpass', label: 'HP' },
   { value: 'bandpass', label: 'BP' },
-  { value: 'notch', label: 'NOTCH' },
+  { value: 'notch', label: 'NT' },
 ]
 
 const LFO_TARGET_OPTIONS: { value: LfoTarget; label: string }[] = [
-  { value: 'pitch', label: 'PITCH' },
-  { value: 'filter', label: 'FILTER' },
+  { value: 'pitch', label: 'PIT' },
+  { value: 'filter', label: 'FLT' },
   { value: 'amplitude', label: 'AMP' },
 ]
 
 export function Synth() {
   const {
-    // Oscillator
     waveform,
     detune,
     octave,
     updateWaveform,
     updateDetune,
     updateOctave,
-
-    // Envelope
     attack,
     decay,
     sustain,
@@ -46,8 +43,6 @@ export function Synth() {
     updateDecay,
     updateSustain,
     updateRelease,
-
-    // Filter
     filterType,
     filterCutoff,
     filterResonance,
@@ -56,8 +51,6 @@ export function Synth() {
     updateFilterCutoff,
     updateFilterResonance,
     updateFilterEnvAmount,
-
-    // LFO
     lfoEnabled,
     lfoWaveform,
     lfoRate,
@@ -68,42 +61,38 @@ export function Synth() {
     updateLfoRate,
     updateLfoDepth,
     updateLfoTarget,
-
-    // Master
     masterGain,
     portamento,
     updateMasterGain,
     updatePortamento,
-
-    // Notes
     noteOn,
     noteOff,
   } = useSynth()
 
   return (
     <div className="synth-root">
-      <header className="synth-header">
-        <h1>Überwelle</h1>
-        <p className="synth-subtitle">Polyphonic Web Synthesizer</p>
-        <p className="synth-model-badge">Model 002</p>
+      <header className="page-header">
+        <h1 className="brand">Motherboard Instruments</h1>
       </header>
+
+      <div className="instrument-header">
+        <h2 className="instrument-name">Überwelle</h2>
+        <span className="instrument-type">Polyphonic Synthesizer</span>
+        <span className="instrument-version">v0.2.0</span>
+      </div>
 
       <div className="synth-housing">
         <div className="synth-inner">
-          {/* Main control area with modules */}
           <div className="synth-modules">
-            {/* ─── OSCILLATOR MODULE ─────────────────────────────────── */}
-            <ModulePanel title="VCO" color="primary">
+            {/* VCO */}
+            <ModulePanel title="[01] VCO">
               <div className="module-column">
                 <ToggleGroup
                   value={waveform}
                   options={WAVEFORM_OPTIONS}
-                  label="Waveform"
+                  label="Wave"
                   onChange={updateWaveform}
                 />
-              </div>
-              <div className="module-divider" />
-              <div className="module-column">
                 <Knob
                   value={detune}
                   min={-100}
@@ -113,7 +102,7 @@ export function Synth() {
                   unit="¢"
                   formatValue={(v) => v.toFixed(0)}
                   onChange={updateDetune}
-                  size="medium"
+                  size="small"
                 />
                 <Knob
                   value={octave}
@@ -126,13 +115,10 @@ export function Synth() {
                   size="small"
                 />
               </div>
-              <div className="patch-row">
-                <PatchPoint type="output" label="OUT" />
-              </div>
             </ModulePanel>
 
-            {/* ─── FILTER MODULE ─────────────────────────────────────── */}
-            <ModulePanel title="VCF" color="secondary">
+            {/* VCF */}
+            <ModulePanel title="[02] VCF">
               <div className="module-column">
                 <ToggleGroup
                   value={filterType}
@@ -140,9 +126,6 @@ export function Synth() {
                   label="Type"
                   onChange={updateFilterType}
                 />
-              </div>
-              <div className="module-divider" />
-              <div className="module-column">
                 <Knob
                   value={filterCutoff}
                   min={20}
@@ -152,102 +135,83 @@ export function Synth() {
                   unit="Hz"
                   formatValue={(v) => (v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v.toFixed(0))}
                   onChange={updateFilterCutoff}
-                  size="large"
-                  color="secondary"
+                  size="medium"
                 />
-              </div>
-              <div className="module-column">
                 <Knob
                   value={filterResonance}
                   min={0}
                   max={30}
                   step={0.1}
-                  label="Resonance"
+                  label="Q"
                   formatValue={(v) => v.toFixed(1)}
                   onChange={updateFilterResonance}
-                  size="medium"
-                  color="secondary"
+                  size="small"
                 />
                 <Knob
                   value={filterEnvAmount}
                   min={-1}
                   max={1}
                   step={0.01}
-                  label="Env Amt"
+                  label="Env"
                   formatValue={(v) => `${(v * 100).toFixed(0)}%`}
                   onChange={updateFilterEnvAmount}
                   size="small"
-                  color="secondary"
                 />
-              </div>
-              <div className="patch-row">
-                <PatchPoint type="input" label="IN" />
-                <PatchPoint type="output" label="OUT" />
               </div>
             </ModulePanel>
 
-            {/* ─── ENVELOPE MODULE ───────────────────────────────────── */}
-            <ModulePanel title="ENV" color="hot">
+            {/* ENV */}
+            <ModulePanel title="[03] ENV">
               <div className="env-knobs">
                 <Knob
                   value={attack}
                   min={0.001}
                   max={2}
                   step={0.01}
-                  label="Attack"
-                  unit="s"
-                  formatValue={(v) => (v < 1 ? `${(v * 1000).toFixed(0)}ms` : `${v.toFixed(2)}s`)}
+                  label="A"
+                  formatValue={(v) => (v < 1 ? `${(v * 1000).toFixed(0)}` : `${v.toFixed(1)}s`)}
                   onChange={updateAttack}
-                  size="medium"
-                  color="hot"
+                  size="small"
                 />
                 <Knob
                   value={decay}
                   min={0.001}
                   max={2}
                   step={0.01}
-                  label="Decay"
-                  unit="s"
-                  formatValue={(v) => (v < 1 ? `${(v * 1000).toFixed(0)}ms` : `${v.toFixed(2)}s`)}
+                  label="D"
+                  formatValue={(v) => (v < 1 ? `${(v * 1000).toFixed(0)}` : `${v.toFixed(1)}s`)}
                   onChange={updateDecay}
-                  size="medium"
-                  color="hot"
+                  size="small"
                 />
                 <Knob
                   value={sustain}
                   min={0}
                   max={1}
                   step={0.01}
-                  label="Sustain"
+                  label="S"
                   formatValue={(v) => `${(v * 100).toFixed(0)}%`}
                   onChange={updateSustain}
-                  size="medium"
-                  color="hot"
+                  size="small"
                 />
                 <Knob
                   value={release}
                   min={0.01}
                   max={4}
                   step={0.01}
-                  label="Release"
-                  unit="s"
-                  formatValue={(v) => (v < 1 ? `${(v * 1000).toFixed(0)}ms` : `${v.toFixed(2)}s`)}
+                  label="R"
+                  formatValue={(v) => (v < 1 ? `${(v * 1000).toFixed(0)}` : `${v.toFixed(1)}s`)}
                   onChange={updateRelease}
-                  size="medium"
-                  color="hot"
+                  size="small"
                 />
-              </div>
-              <div className="patch-row">
-                <PatchPoint type="output" label="OUT" />
               </div>
             </ModulePanel>
 
-            {/* ─── LFO MODULE ────────────────────────────────────────── */}
-            <ModulePanel title="LFO" color="cool">
+            {/* LFO */}
+            <ModulePanel title="[04] LFO">
               <div className="module-column">
                 <Switch
                   value={lfoEnabled}
-                  label="Active"
+                  label="On"
                   onChange={updateLfoEnabled}
                 />
                 <ToggleGroup
@@ -256,9 +220,6 @@ export function Synth() {
                   label="Wave"
                   onChange={updateLfoWaveform}
                 />
-              </div>
-              <div className="module-divider" />
-              <div className="module-column">
                 <Knob
                   value={lfoRate}
                   min={0.1}
@@ -268,8 +229,7 @@ export function Synth() {
                   unit="Hz"
                   formatValue={(v) => v.toFixed(1)}
                   onChange={updateLfoRate}
-                  size="medium"
-                  color="cool"
+                  size="small"
                 />
                 <Knob
                   value={lfoDepth}
@@ -279,27 +239,19 @@ export function Synth() {
                   label="Depth"
                   formatValue={(v) => `${(v * 100).toFixed(0)}%`}
                   onChange={updateLfoDepth}
-                  size="medium"
-                  color="cool"
+                  size="small"
                 />
-              </div>
-              <div className="module-divider" />
-              <div className="module-column">
                 <ToggleGroup
                   value={lfoTarget}
                   options={LFO_TARGET_OPTIONS}
                   label="Target"
                   onChange={updateLfoTarget}
-                  layout="vertical"
                 />
-              </div>
-              <div className="patch-row">
-                <PatchPoint type="output" label="OUT" />
               </div>
             </ModulePanel>
 
-            {/* ─── MASTER MODULE ─────────────────────────────────────── */}
-            <ModulePanel title="MASTER" color="primary">
+            {/* MASTER */}
+            <ModulePanel title="[05] OUT">
               <div className="module-column">
                 <Knob
                   value={masterGain}
@@ -309,29 +261,22 @@ export function Synth() {
                   label="Volume"
                   formatValue={(v) => `${(v * 100).toFixed(0)}%`}
                   onChange={updateMasterGain}
-                  size="large"
+                  size="medium"
                 />
-              </div>
-              <div className="module-column">
                 <Knob
                   value={portamento}
                   min={0}
                   max={1}
                   step={0.01}
                   label="Glide"
-                  unit="s"
                   formatValue={(v) => (v < 0.1 ? `${(v * 1000).toFixed(0)}ms` : `${v.toFixed(2)}s`)}
                   onChange={updatePortamento}
-                  size="medium"
+                  size="small"
                 />
-              </div>
-              <div className="patch-row">
-                <PatchPoint type="input" label="IN" />
               </div>
             </ModulePanel>
           </div>
 
-          {/* Keyboard at the bottom */}
           <Keyboard
             notes={NOTES}
             onNoteDown={(id, freq) => noteOn(id, freq)}
@@ -340,14 +285,21 @@ export function Synth() {
         </div>
       </div>
 
-      <footer className="synth-footer">
-        <p>
-          <kbd>Z</kbd>–<kbd>M</kbd> lower octave · <kbd>Q</kbd>–<kbd>I</kbd> upper octave
-        </p>
+      <footer className="status-bar">
+        <div className="status-bar-left">
+          <span className="status-item active">AUDIO READY</span>
+          <span className="status-divider" />
+          <span className="status-item">VOICES: 0/8</span>
+          <span className="status-divider" />
+          <span className="status-item">48kHz / 32-bit</span>
+        </div>
+        <div className="status-bar-right">
+          <span><kbd>Z</kbd>–<kbd>M</kbd> lower</span>
+          <span><kbd>Q</kbd>–<kbd>I</kbd> upper</span>
+          <span className="status-divider" />
+          <span>Web Audio API</span>
+        </div>
       </footer>
-
-      {/* Noise texture overlay for that analog feel */}
-      <div className="noise-overlay" aria-hidden="true" />
     </div>
   )
 }

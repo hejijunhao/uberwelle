@@ -1,240 +1,134 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   KEYBOARD — Compact Moog-style keyboard at bottom
-   Smaller keys with neon glow active states
+   KEYBOARD v3 — Drum machine / Grid pad aesthetic
+   Uniform square pads, no piano distinction, matrix layout
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .keyboard {
-  --white-key-width: 36px;
-  --white-key-height: 120px;
-  --black-key-width: 24px;
-  --black-key-height: 75px;
+  --pad-size: 44px;
+  --pad-gap: 4px;
 
-  position: relative;
-  display: inline-block;
+  display: grid;
+  grid-template-columns: repeat(14, var(--pad-size));
+  gap: var(--pad-gap);
   padding: var(--space-3);
-  background: var(--color-black);
-  border-radius: var(--radius-md);
-  box-shadow:
-    inset 0 2px 8px rgba(0, 0, 0, 0.8),
-    0 4px 20px rgba(0, 0, 0, 0.5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   margin: 0 auto;
 }
 
-.white-keys {
-  display: flex;
-  position: relative;
-}
-
+/* Hide the original key containers - we'll flatten everything */
+.white-keys,
 .black-keys {
-  position: absolute;
-  top: var(--space-3);
-  left: var(--space-3);
-  pointer-events: none;
+  display: contents;
 }
 
-/* ─── Base Key Styles ────────────────────────────────────────────────────── */
+/* ─── Pad Styles ─────────────────────────────────────────────────────────── */
 .key {
-  border: none;
+  width: var(--pad-size);
+  height: var(--pad-size);
+  border: 1px solid var(--color-border);
+  background: var(--color-gray-900);
   cursor: pointer;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 8px;
+  gap: 2px;
   font-family: var(--font-mono);
-  font-weight: 500;
   user-select: none;
-  transition:
-    background 0.08s ease,
-    box-shadow 0.15s ease,
-    transform 0.08s ease;
+  transition: all var(--transition-fast);
+  position: relative;
 }
 
 .key:focus {
   outline: none;
 }
 
-.key-label {
-  user-select: none;
-  pointer-events: none;
-  font-size: 8px;
-  opacity: 0.6;
+.key:hover {
+  background: var(--color-gray-800);
+  border-color: var(--color-gray-600);
 }
 
-/* ─── White Keys ─────────────────────────────────────────────────────────── */
-.white-key {
-  width: var(--white-key-width);
-  height: var(--white-key-height);
-  /* Matte ivory — not glossy */
-  background:
-    linear-gradient(to bottom,
-      #f0ece8 0%,
-      #e8e4e0 5%,
-      #e5e1dc 50%,
-      #ddd9d4 95%,
-      #d0ccc7 100%
-    );
-  border: 1px solid #b8b4af;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  margin-right: 1px;
+.key:active,
+.key.active {
+  background: var(--color-white);
+  border-color: var(--color-white);
+}
+
+/* ─── Pad Labels ─────────────────────────────────────────────────────────── */
+.key-label {
+  font-size: var(--text-2xs);
+  font-weight: 500;
   color: var(--color-text-tertiary);
-  box-shadow:
-    inset 0 -3px 6px rgba(0, 0, 0, 0.1),
-    0 3px 6px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.5px;
+}
+
+.key:hover .key-label {
+  color: var(--color-text-secondary);
+}
+
+.key:active .key-label,
+.key.active .key-label {
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+/* ─── White vs Black key distinction — subtle ────────────────────────────── */
+.white-key {
+  background: var(--color-gray-800);
+}
+
+.black-key {
+  background: var(--color-gray-900);
   position: relative;
 }
 
-/* Subtle top bevel */
-.white-key::before {
+/* Sharp indicator dot */
+.black-key::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
-  border-radius: 0;
-  opacity: 0.5;
+  top: 4px;
+  right: 4px;
+  width: 4px;
+  height: 4px;
+  background: var(--color-gray-600);
 }
 
-.white-key:last-child {
-  margin-right: 0;
+.black-key:active::after,
+.black-key.active::after {
+  background: var(--color-black);
 }
 
-.white-key:hover {
-  background:
-    linear-gradient(to bottom,
-      #f5f2ee 0%,
-      #edebe7 5%,
-      #eae7e3 50%,
-      #e2dfdb 95%,
-      #d8d5d0 100%
-    );
-}
-
-.white-key:active,
-.white-key.active {
-  background:
-    linear-gradient(to bottom,
-      #00ffaa 0%,
-      #00e699 30%,
-      #00cc88 70%,
-      #00b377 100%
-    );
-  border-color: #00aa77;
-  color: var(--color-black);
-  font-weight: 700;
-  box-shadow:
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
-    0 0 12px rgba(0, 255, 170, 0.6),
-    0 0 25px rgba(0, 255, 170, 0.4),
-    0 0 40px rgba(0, 255, 170, 0.2);
-  transform: translateY(1px);
-}
-
-.white-key:active .key-label,
-.white-key.active .key-label {
-  opacity: 1;
-}
-
-/* ─── Black Keys ─────────────────────────────────────────────────────────── */
-.black-key {
-  position: absolute;
-  width: var(--black-key-width);
-  height: var(--black-key-height);
-  /* Deep matte black with subtle texture feel */
-  background:
-    linear-gradient(to bottom,
-      #2a2a2a 0%,
-      #1f1f1f 10%,
-      #181818 50%,
-      #0f0f0f 90%,
-      #080808 100%
-    );
-  border: 1px solid #0a0a0a;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  color: var(--color-text-tertiary);
-  font-size: 7px;
-  z-index: 1;
-  pointer-events: auto;
-  box-shadow:
-    inset 0 -5px 10px rgba(0, 0, 0, 0.5),
-    0 5px 10px rgba(0, 0, 0, 0.6),
-    0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-/* Highlight edge on black keys */
-.black-key::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 1px;
-  right: 1px;
-  height: 2px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
-}
-
-.black-key:hover {
-  background:
-    linear-gradient(to bottom,
-      #333333 0%,
-      #282828 10%,
-      #202020 50%,
-      #181818 90%,
-      #101010 100%
-    );
-}
-
-.black-key:active,
-.black-key.active {
-  background:
-    linear-gradient(to bottom,
-      #00cc88 0%,
-      #00b377 30%,
-      #009966 70%,
-      #008055 100%
-    );
-  border-color: #006644;
-  color: var(--color-black);
-  font-weight: 700;
-  box-shadow:
-    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
-    0 0 10px rgba(0, 255, 170, 0.7),
-    0 0 20px rgba(0, 255, 170, 0.5),
-    0 0 35px rgba(0, 255, 170, 0.3);
-  transform: translateY(1px);
-}
-
-.black-key:active .key-label,
-.black-key.active .key-label {
-  opacity: 1;
-}
-
-/* ─── Responsive keyboard ───────────────────────────────────────────────── */
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .keyboard {
-    --white-key-width: 28px;
-    --white-key-height: 90px;
-    --black-key-width: 18px;
-    --black-key-height: 55px;
-    padding: var(--space-2);
+    --pad-size: 36px;
+    --pad-gap: 3px;
+    grid-template-columns: repeat(14, var(--pad-size));
   }
 
   .key-label {
-    font-size: 6px;
+    font-size: 9px;
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .keyboard {
-    --white-key-width: 22px;
-    --white-key-height: 70px;
-    --black-key-width: 14px;
-    --black-key-height: 42px;
+    --pad-size: 32px;
+    --pad-gap: 2px;
+    grid-template-columns: repeat(7, var(--pad-size));
+  }
+}
+
+@media (max-width: 400px) {
+  .keyboard {
+    --pad-size: 28px;
+    grid-template-columns: repeat(7, var(--pad-size));
   }
 
   .key-label {
-    display: none;
+    font-size: 8px;
   }
 }

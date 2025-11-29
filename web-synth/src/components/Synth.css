@@ -1,126 +1,140 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   SYNTH ROOT — Modular Synthesizer Layout
-   Moog-style housing with multiple module sections
+   SYNTH ROOT v2 — System UI / LLM Interface aesthetic
+   Clean grid layout, no decorative elements, data-focused
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .synth-root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: var(--space-6) var(--space-4);
   min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(0, 255, 170, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 20% 100%, rgba(255, 107, 53, 0.02) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 100%, rgba(0, 212, 255, 0.02) 0%, transparent 40%),
-    var(--color-void);
+  background: var(--color-black);
   position: relative;
 }
 
-/* ─── Header ─────────────────────────────────────────────────────────────── */
-.synth-header {
+/* ─── Page Header — Brand Logo ───────────────────────────────────────────── */
+.page-header {
   text-align: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-10);
+  padding: var(--space-6) 0;
+  width: 100%;
+  max-width: 1000px;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.synth-header h1 {
-  font-family: var(--font-display);
-  font-size: var(--text-3xl);
-  font-weight: 700;
+.brand {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: 600;
   margin: 0;
   letter-spacing: 6px;
   text-transform: uppercase;
-  color: var(--color-glow-primary);
-  text-shadow:
-    0 0 10px var(--color-glow-primary),
-    0 0 30px rgba(0, 255, 170, 0.5),
-    0 0 60px rgba(0, 255, 170, 0.3);
+  color: var(--color-white);
   position: relative;
+  display: inline-block;
 }
 
-/* Subtle flicker animation for the title */
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  92% { opacity: 1; }
-  93% { opacity: 0.8; }
-  94% { opacity: 1; }
-  96% { opacity: 0.9; }
-  97% { opacity: 1; }
+.brand::before {
+  content: '◼';
+  margin-right: var(--space-3);
+  font-size: var(--text-lg);
+  vertical-align: middle;
 }
 
-.synth-header h1 {
-  animation: flicker 8s infinite;
+.brand::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-white);
 }
 
-.synth-subtitle {
+/* ─── Instrument Header — Per-synth identity ─────────────────────────────── */
+.instrument-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+  max-width: 1000px;
+}
+
+.instrument-name {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-tertiary);
-  margin-top: var(--space-2);
-  text-transform: uppercase;
-  letter-spacing: 4px;
+  font-size: var(--text-xl);
   font-weight: 500;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
 }
 
-/* ─── Main Synth Housing ─────────────────────────────────────────────────── */
+.instrument-type {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.instrument-version {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: auto;
+}
+
+.instrument-version::before {
+  content: '// ';
+}
+
+/* ─── Main Synth Housing — Clean container ───────────────────────────────── */
 .synth-housing {
-  background: var(--color-surface);
+  background: var(--color-black);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
-  box-shadow: var(--shadow-deep);
+  padding: var(--space-4);
   position: relative;
-  overflow: hidden;
-  max-width: 1200px;
+  max-width: 1000px;
   width: 100%;
 }
 
-/* Wood side panels (Moog tribute) */
-.synth-housing::before,
-.synth-housing::after {
-  content: '';
+/* Top info bar */
+.synth-housing::before {
+  content: 'SYS.AUDIO.SYNTH';
   position: absolute;
   top: 0;
-  bottom: 0;
-  width: 14px;
-  background: linear-gradient(
-    180deg,
-    var(--color-wood-light) 0%,
-    var(--color-wood) 20%,
-    var(--color-wood-dark) 50%,
-    var(--color-wood) 80%,
-    var(--color-wood-light) 100%
-  );
-  z-index: 10;
-}
-
-.synth-housing::before {
   left: 0;
-  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 2px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-text-muted);
+  background: var(--color-black);
+  letter-spacing: 1px;
+  transform: translateY(-50%);
 }
 
-.synth-housing::after {
-  right: 0;
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-  border-left: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-/* Inner content area (between wood panels) */
 .synth-inner {
   position: relative;
-  z-index: 5;
-  padding: 0 var(--space-4);
 }
 
-/* ─── Modules Grid ───────────────────────────────────────────────────────── */
+/* ─── Modules Grid — Systematic layout ───────────────────────────────────── */
 .synth-modules {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--color-border);
   margin-bottom: var(--space-4);
+}
+
+.synth-modules > * {
+  background: var(--color-surface);
 }
 
 /* Layout helpers within modules */
@@ -128,6 +142,7 @@
   display: flex;
   gap: var(--space-3);
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .patch-row {
@@ -136,82 +151,93 @@
   justify-content: center;
   margin-top: var(--space-3);
   padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border-subtle);
+  border-top: 1px solid var(--color-border);
 }
 
-/* ─── Footer ─────────────────────────────────────────────────────────────── */
-.synth-footer {
-  margin-top: var(--space-6);
-  text-align: center;
-  color: var(--color-text-tertiary);
+/* ─── Status Bar — Fixed IDE-style footer ────────────────────────────────── */
+.status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 1px;
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  z-index: 1000;
 }
 
-.synth-footer kbd {
-  background: var(--color-surface-raised);
+.status-bar-left,
+.status-bar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.status-item::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--color-gray-600);
+}
+
+.status-item.active::before {
+  background: var(--color-white);
+}
+
+.status-divider {
+  width: 1px;
+  height: 12px;
+  background: var(--color-border);
+}
+
+.status-bar kbd {
+  background: var(--color-gray-800);
   border: 1px solid var(--color-border);
-  border-bottom: 2px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  padding: 2px 6px;
+  padding: 1px 4px;
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 9px;
   color: var(--color-text-secondary);
-  margin: 0 2px;
 }
 
-/* ─── Model Badge ────────────────────────────────────────────────────────── */
-.synth-model-badge {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-top: var(--space-2);
-  opacity: 0.6;
+/* Add bottom padding to main content so it doesn't get hidden behind status bar */
+.synth-root {
+  padding-bottom: 48px;
 }
 
-.synth-model-badge::before {
-  content: '[ ';
+/* ─── Remove noise overlay in brutalist design ───────────────────────────── */
+.noise-overlay {
+  display: none;
 }
 
-.synth-model-badge::after {
-  content: ' ]';
-}
-
-/* ─── Responsive adjustments ─────────────────────────────────────────────── */
-@media (max-width: 1000px) {
-  .synth-modules {
-    gap: var(--space-3);
-  }
-
-  .env-knobs {
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-}
-
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .synth-root {
     padding: var(--space-4) var(--space-2);
   }
 
   .synth-header h1 {
-    font-size: var(--text-2xl);
-    letter-spacing: 4px;
+    font-size: var(--text-lg);
+    letter-spacing: 2px;
   }
 
   .synth-housing {
-    padding: var(--space-4) var(--space-3);
+    padding: var(--space-3);
   }
 
-  .synth-housing::before,
-  .synth-housing::after {
-    width: 10px;
-  }
-
-  .synth-inner {
-    padding: 0 var(--space-2);
+  .synth-modules {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 }

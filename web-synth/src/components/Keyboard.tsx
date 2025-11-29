@@ -65,68 +65,24 @@ export function Keyboard({ notes, onNoteDown, onNoteUp }: KeyboardProps) {
     }
   }, [handleNoteDown, handleNoteUp])
 
-  // Separate white and black keys for proper rendering
-  const whiteKeys = notes.filter((n) => !n.isBlack)
-  const blackKeys = notes.filter((n) => n.isBlack)
-
-  // Calculate black key positions (they sit between white keys)
-  const getBlackKeyOffset = (noteId: string): number => {
-    const noteName = noteId.replace(/\d/, '')
-    const octave = parseInt(noteId.match(/\d/)?.[0] || '3')
-
-    // Find the index of the white key to the left
-    const whiteKeysBefore = whiteKeys.findIndex((w) => {
-      const wName = w.id.replace(/\d/, '')
-      const wOctave = parseInt(w.id.match(/\d/)?.[0] || '3')
-
-      // Black key should be positioned after this white key
-      if (noteName === 'C#' && wName === 'C' && wOctave === octave) return true
-      if (noteName === 'D#' && wName === 'D' && wOctave === octave) return true
-      if (noteName === 'F#' && wName === 'F' && wOctave === octave) return true
-      if (noteName === 'G#' && wName === 'G' && wOctave === octave) return true
-      if (noteName === 'A#' && wName === 'A' && wOctave === octave) return true
-      return false
-    })
-
-    return whiteKeysBefore
-  }
+  // Sort notes chromatically for grid layout
+  const sortedNotes = [...notes].sort((a, b) => a.frequency - b.frequency)
 
   return (
     <div className="keyboard">
-      <div className="white-keys">
-        {whiteKeys.map((note) => (
-          <button
-            key={note.id}
-            className={`key white-key ${activeNotes.has(note.id) ? 'active' : ''}`}
-            onMouseDown={() => handleNoteDown(note)}
-            onMouseUp={() => handleNoteUp(note.id)}
-            onMouseLeave={() => {
-              if (activeNotes.has(note.id)) handleNoteUp(note.id)
-            }}
-          >
-            <span className="key-label">{note.label}</span>
-          </button>
-        ))}
-      </div>
-      <div className="black-keys">
-        {blackKeys.map((note) => {
-          const offset = getBlackKeyOffset(note.id)
-          return (
-            <button
-              key={note.id}
-              className={`key black-key ${activeNotes.has(note.id) ? 'active' : ''}`}
-              style={{ left: `calc(${offset} * var(--white-key-width) + var(--white-key-width) * 0.65)` }}
-              onMouseDown={() => handleNoteDown(note)}
-              onMouseUp={() => handleNoteUp(note.id)}
-              onMouseLeave={() => {
-                if (activeNotes.has(note.id)) handleNoteUp(note.id)
-              }}
-            >
-              <span className="key-label">{note.label}</span>
-            </button>
-          )
-        })}
-      </div>
+      {sortedNotes.map((note) => (
+        <button
+          key={note.id}
+          className={`key ${note.isBlack ? 'black-key' : 'white-key'} ${activeNotes.has(note.id) ? 'active' : ''}`}
+          onMouseDown={() => handleNoteDown(note)}
+          onMouseUp={() => handleNoteUp(note.id)}
+          onMouseLeave={() => {
+            if (activeNotes.has(note.id)) handleNoteUp(note.id)
+          }}
+        >
+          <span className="key-label">{note.label}</span>
+        </button>
+      ))}
     </div>
   )
 }
