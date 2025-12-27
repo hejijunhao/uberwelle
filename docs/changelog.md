@@ -19,6 +19,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.1] - 2025-12-27
+
+> Composer UI overhaul with overlay modal and style-based color system.
+
+### Changed
+
+#### Block Configuration Overlay
+- **Overlay modal** - config panel now appears as a centered modal with dark backdrop
+- **Click-to-dismiss** - click outside or × button to close
+- **Smooth animations** - fade-in backdrop with slide-up panel
+
+#### Style Selector Redesign
+- **Button grid** - replaced dropdown with 4×2 button grid for style selection
+- **Color-coded styles** - each style has a distinct color:
+  - Ambient (blue), Techno (red-pink), House (orange), Jazz (purple)
+  - Experimental (cyan), Drone (indigo), Minimal (lime), Breaks (pink)
+- **Visual feedback** - buttons highlight in their style color on hover and when active
+
+#### Colored Blocks
+- **Color bar indicator** - configured blocks display a colored bar at the bottom
+- **Style abbreviation** - 3-letter style code shown in the style's color
+- **Border accents** - block borders highlight in style color on hover/active
+
+#### BUILD SET Button
+- **Gradient background** - red-pink to orange gradient (techno → house)
+- **Hover effects** - brightness boost with subtle lift animation
+
+### Added
+- **Style color palette** - 8 CSS variables for style-specific colors in design system
+
+---
+
 ## [1.2.0] - 2025-12-27
 
 > Composer set builder and instrument card images.

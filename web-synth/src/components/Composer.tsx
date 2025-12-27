@@ -73,6 +73,7 @@ export function Composer() {
           blockIndex={activeIndex}
           onSave={handleSave}
           onClear={handleClear}
+          onClose={() => setActiveIndex(null)}
         />
       )}
 

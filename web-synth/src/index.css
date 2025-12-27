@@ -31,6 +31,16 @@
   --color-active: #ffffff;
   --color-error: #ff3333;
 
+  /* Style colors — for Composer blocks */
+  --color-style-ambient: #4a9eff;
+  --color-style-techno: #ff4a6a;
+  --color-style-house: #ff8c4a;
+  --color-style-jazz: #a855f7;
+  --color-style-experimental: #22d3ee;
+  --color-style-drone: #6366f1;
+  --color-style-minimal: #84cc16;
+  --color-style-breaks: #f472b6;
+
   /* Text hierarchy */
   --color-text-primary: #ffffff;
   --color-text-secondary: #888888;

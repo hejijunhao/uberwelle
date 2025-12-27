@@ -1,20 +1,88 @@
+.block-config-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .block-config {
   background: var(--color-surface);
   border: 1px solid var(--color-gray-700);
-  margin-top: var(--space-4);
+  width: 90%;
+  max-width: 480px;
+  animation: slideUp 0.2s ease;
 }
 
 .block-config__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--color-gray-800);
   background: var(--color-surface-raised);
 }
 
 .block-config__title {
-  font-size: var(--text-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--color-white);
   letter-spacing: 0.1em;
+}
+
+.block-config__block-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.block-config__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid var(--color-gray-700);
+  color: var(--color-gray-400);
+  font-size: var(--text-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.block-config__close:hover {
+  border-color: var(--color-gray-500);
+  color: var(--color-white);
 }
 
 .block-config__body {
@@ -26,24 +94,27 @@
 
 .block-config__section {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.block-config__section--styles {
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-gray-800);
+}
+
+.block-config__row {
+  display: flex;
   gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.block-config__section--bpm {
+  flex-shrink: 0;
 }
 
 .block-config__section--instruments {
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.block-config__control {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.block-config__control--style {
   flex: 1;
-  max-width: 180px;
 }
 
 .block-config__label {
@@ -52,25 +123,33 @@
   letter-spacing: 0.15em;
 }
 
-.block-config__select {
-  width: 100%;
-  padding: var(--space-2) var(--space-3);
+.block-config__styles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+}
+
+.block-config__style {
+  padding: var(--space-2) var(--space-2);
   background: var(--color-gray-900);
   border: 1px solid var(--color-gray-700);
-  color: var(--color-white);
+  color: var(--color-gray-400);
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: border-color var(--transition-fast);
+  transition: all var(--transition-fast);
+  text-align: center;
 }
 
-.block-config__select:hover {
-  border-color: var(--color-gray-600);
+.block-config__style:hover {
+  border-color: var(--style-color);
+  color: var(--style-color);
+  background: var(--color-surface-raised);
 }
 
-.block-config__select:focus {
-  outline: none;
-  border-color: var(--color-white);
+.block-config__style--active {
+  background: var(--color-surface-raised);
 }
 
 .block-config__instruments {
@@ -127,13 +206,15 @@
 }
 
 .block-config__btn--save {
+  flex: 1;
   background: var(--color-white);
   border: 1px solid var(--color-white);
   color: var(--color-black);
+  font-weight: 500;
 }
 
 .block-config__btn--save:hover {
-  background: var(--color-gray-200);
+  filter: brightness(1.1);
 }
 
 .block-config__btn--clear {
@@ -148,14 +229,17 @@
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-  .block-config__section {
+@media (max-width: 500px) {
+  .block-config__styles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .block-config__row {
     flex-direction: column;
     gap: var(--space-4);
   }
 
-  .block-config__control--style {
-    max-width: none;
+  .block-config__section--instruments {
     width: 100%;
   }
 }

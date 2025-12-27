@@ -1,4 +1,5 @@
 .composer-block {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +12,7 @@
   font-family: var(--font-mono);
   cursor: pointer;
   transition: all var(--transition-fast);
+  overflow: hidden;
 }
 
 .composer-block:hover {
@@ -28,8 +30,12 @@
   border-color: var(--color-gray-600);
 }
 
+.composer-block--configured:hover {
+  border-color: var(--block-color, var(--color-gray-500));
+}
+
 .composer-block--configured.composer-block--active {
-  border-color: var(--color-white);
+  border-color: var(--block-color, var(--color-white));
 }
 
 .composer-block__number {
@@ -62,6 +68,14 @@
 
 .composer-block__style {
   font-size: var(--text-2xs);
-  color: var(--color-gray-400);
   letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.composer-block__color-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
 }
