@@ -20,7 +20,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.1] - 2025-12-27
+
+> Inline instrument experience with compact synth view and high-tech UI polish.
+
+### Added
+
+#### Compact Synth View
+- **Inline instrument mode** - synth now appears embedded on homepage instead of full-screen takeover
+- **`CompactSynth` component** - simplified controls (waveform, cutoff, attack, release, volume) with full keyboard
+- **Expand button** `[EXPAND]` to open full-screen synth view
+- **Close button** `[X]` to collapse back to instrument grid
+
+#### Branding & Assets
+- **Custom favicon** replacing Vite placeholder
+- **Logo in header** using `Main Icon small.png`
+- Header content now aligns with main grid (max-width 1200px)
+
+#### Footer Redesign
+- **Pulsing status light** with `SYS.ONLINE` indicator
+- **Singapore coordinates** (1.3521°N 103.8198°E)
+- **Live clock** displaying current time with SGT timezone
+- Footer aligns with content grid
+
+### Changed
+- Tagline updated to "Programmed instruments for the modern era"
+
+---
+
 ## [1.1.0] - 2025-12-27
+
+> Multi-instrument platform with homepage grid and navigation system.
 
 ### Added
 
@@ -50,6 +80,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.0] - 2025-11-29
+
+> Initial release with polyphonic Web Audio synthesizer and virtual keyboard.
 
 ### Added
 
