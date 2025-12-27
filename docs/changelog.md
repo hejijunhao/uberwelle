@@ -10,12 +10,98 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- **Drum Machine** - Step sequencer with drum samples
-- **Sampler** - Load and manipulate audio samples
-- **Ambient Generator** - Generative textures and drones
+- **Composer UI Controls** - Play/Pause/Stop/Skip transport, progress bar, block indicator
 - Oscilloscope visualization using AnalyserNode
 - Preset system for saving/loading sound configurations
 - Effects chain (Reverb, Delay)
+
+---
+
+## [1.3.0] - 2025-12-27
+
+> Composer audio engine for generative deep work background music.
+
+### Added
+
+#### Generative Music Engine (`src/audio/composer/`)
+
+A complete deterministic music generation system using pure Web Audio synthesis (no samples).
+
+##### Clock & Timing (`clock.ts`)
+- **Lookahead scheduler** - Sample-accurate timing using Web Audio's `currentTime`
+- **Beat/bar callbacks** - Subscribe to 16th notes, beats, or bars
+- **Tempo control** - Dynamic BPM changes (60-200 BPM)
+- **Transport controls** - Start, stop, pause, resume
+
+##### Synthesized Drums (`drumSynth.ts`)
+- **Kick** - Sine wave with pitch envelope (150Hz → 50Hz) + click transient
+- **Snare** - Bandpass-filtered noise + tonal body resonance
+- **Hi-hat (closed/open)** - Highpass-filtered noise with variable decay
+- **Clap** - Layered noise bursts with staggered timing
+
+##### Bass Synth (`bassSynth.ts`)
+- **Dual oscillators** - Sawtooth + square, detuned for thickness
+- **Lowpass filter** - With envelope modulation
+- **Portamento** - Smooth glide between notes
+- **ADSR envelope** - Full attack/decay/sustain/release control
+
+##### Pad Synth (`padSynth.ts`)
+- **Polyphonic** - Unlimited simultaneous voices
+- **Detuned unison** - 3 oscillators per voice with spread
+- **Slow envelopes** - 500ms attack, 2s release for pad character
+- **LFO modulation** - Slow filter movement for evolving textures
+- **Chord helper** - `chordOn('Cm7', time)` parses and plays chords
+
+##### Style Definitions (`styles/`)
+Three musical styles with characteristic patterns:
+
+| Style | BPM | Character |
+|-------|-----|-----------|
+| **Deep House** | 118-124 | Warm, groovy, offbeat hats, clap on 2&4 |
+| **Progressive House** | 122-128 | Building, melodic, busier hats, layered percussion |
+| **Techno** | 128-138 | Driving, hypnotic, 16th-note hats, hard kick |
+
+Each style defines:
+- Drum patterns (16 steps per bar with velocity)
+- Bass patterns (notes + rhythm)
+- Chord progressions
+- Variation patterns for intros/builds/breakdowns
+
+##### Pattern Player (`patternPlayer.ts`)
+- **Pattern sequencing** - Triggers drums on clock ticks based on style
+- **Humanization** - ±10% velocity variance, ±3ms timing variance
+- **Live style switching** - Change patterns during playback
+
+##### Block Player (`blockPlayer.ts`)
+- **5-minute blocks** - Each block is a complete "track"
+- **Arc structure** - Intro (30s) → Build (30s) → Main (3.25min) → Outro (45s)
+- **Layer management** - Instruments fade in/out based on phase
+- **Chord sequencing** - Plays progressions synced to bars
+
+##### Set Player (`setPlayer.ts`)
+- **Multi-block playback** - Plays configured blocks in sequence
+- **Transport controls** - Play, pause, stop, skip
+- **State callbacks** - React-friendly state updates
+- **Singleton pattern** - Single instance manages all audio
+
+##### Utilities (`noteUtils.ts`)
+- **Note parsing** - Convert "C4" to frequency (261.63 Hz)
+- **Chord parsing** - "Cm7" → ['C3', 'D#3', 'G3', 'A#3']
+- **MIDI helpers** - Bidirectional MIDI ↔ note name conversion
+
+### Technical Notes
+- Pure Web Audio API - no external audio libraries or samples
+- Lookahead scheduling pattern for timing precision
+- Singleton pattern for audio components prevents resource conflicts
+- Callback-based state for React integration
+- All synthesis is deterministic (same inputs = same output)
+
+### Documentation
+- `docs/composer-implementation.md` - Overall architecture and build plan
+- `docs/phase-1-audio-foundation.md` - Clock and drum synth details
+- `docs/phase-2-pattern-engine.md` - Style definitions and pattern player
+- `docs/phase-3-5-synths-and-players.md` - Synths and orchestration layer
+- `docs/phase-6-ui-controls.md` - Planned UI integration
 
 ---
 
