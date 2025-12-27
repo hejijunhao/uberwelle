@@ -14,11 +14,6 @@ function App() {
     // Future instruments will be added here
   }
 
-  const handleStartPlaylist = () => {
-    // Placeholder - will implement playlist feature later
-    console.log('Playlist feature coming soon!')
-  }
-
   const handleCloseSynth = () => {
     setCurrentView('home')
   }
@@ -38,7 +33,6 @@ function App() {
   return (
     <HomePage
       onSelectInstrument={handleSelectInstrument}
-      onStartPlaylist={handleStartPlaylist}
       activeInstrument={currentView === 'synth-inline' ? 'synth' : null}
       onCloseInstrument={handleCloseSynth}
       onExpandInstrument={handleExpandSynth}

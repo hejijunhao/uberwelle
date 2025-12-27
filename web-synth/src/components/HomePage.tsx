@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { InstrumentCard } from './InstrumentCard'
 import { CompactSynth } from './CompactSynth'
+import { Composer } from './Composer'
 import './HomePage.css'
 
 interface HomePageProps {
   onSelectInstrument: (id: string) => void
-  onStartPlaylist: () => void
   activeInstrument: string | null
   onCloseInstrument: () => void
   onExpandInstrument: () => void
@@ -15,10 +15,10 @@ const INSTRUMENTS = [
   {
     id: 'synth',
     number: '01',
-    name: 'SYNTH',
+    name: 'UEBERWELLE',
     description: 'Polyphonic synthesizer with ADSR, filter, and LFO',
     status: 'ready' as const,
-    visual: '~∿~∿~∿~∿~',
+    image: '/instruments/UEBERWELLE.png',
   },
   {
     id: 'drums',
@@ -57,7 +57,6 @@ function formatTime(date: Date): string {
 
 export function HomePage({
   onSelectInstrument,
-  onStartPlaylist,
   activeInstrument,
   onCloseInstrument,
   onExpandInstrument,
@@ -101,35 +100,20 @@ export function HomePage({
             />
           </div>
         ) : (
-          <div className="instruments-grid">
-            {INSTRUMENTS.map((instrument) => (
-              <InstrumentCard
-                key={instrument.id}
-                {...instrument}
-                visual={<span>{instrument.visual}</span>}
-                onClick={() => onSelectInstrument(instrument.id)}
-              />
-            ))}
+          <>
+            <div className="instruments-grid">
+              {INSTRUMENTS.map((instrument) => (
+                <InstrumentCard
+                  key={instrument.id}
+                  {...instrument}
+                  visual={instrument.visual ? <span>{instrument.visual}</span> : undefined}
+                  onClick={() => onSelectInstrument(instrument.id)}
+                />
+              ))}
+            </div>
 
-            <button
-              className="playlist-card"
-              onClick={onStartPlaylist}
-              type="button"
-            >
-              <div className="playlist-card__header">
-                <span className="playlist-card__icon">[▶▶]</span>
-                <span className="playlist-card__label">DEEP FOCUS</span>
-              </div>
-              <h3 className="playlist-card__title">PLAYLIST</h3>
-              <p className="playlist-card__description">
-                AI-generated background music for concentration and flow.
-                Select your mood and let the algorithm compose.
-              </p>
-              <div className="playlist-card__cta">
-                START SESSION →
-              </div>
-            </button>
-          </div>
+            <Composer />
+          </>
         )}
       </main>
 

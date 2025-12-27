@@ -10,13 +10,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- **Deep Focus Playlist** - AI-generated background music for concentration
 - **Drum Machine** - Step sequencer with drum samples
 - **Sampler** - Load and manipulate audio samples
 - **Ambient Generator** - Generative textures and drones
 - Oscilloscope visualization using AnalyserNode
 - Preset system for saving/loading sound configurations
 - Effects chain (Reverb, Delay)
+
+---
+
+## [1.2.0] - 2025-12-27
+
+> Composer set builder and instrument card images.
+
+### Added
+
+#### Composer (Set Builder)
+- **16-block step sequencer** - visual timeline for building sets
+- **Block configuration panel** - inline UI appears when clicking a block
+- **BPM control** - adjustable tempo per block (60-200 BPM)
+- **Style selector** - ambient, techno, house, jazz, experimental, drone, minimal, breaks
+- **Instrument selection** - choose which instruments play in each block (synth, drums, sampler, ambient)
+- **Progress indicator** - shows configured blocks count
+- **BUILD SET button** - appears when blocks are configured
+
+#### New Components
+- `Composer.tsx` - Main set builder container with 16-block grid
+- `ComposerBlock.tsx` - Individual block showing number, BPM badge, and style indicator
+- `BlockConfig.tsx` - Inline configuration panel with knob, dropdown, and checkboxes
+
+#### Instrument Card Images
+- **Image support** - instrument cards can now display images in a dedicated 16:9 area
+- **Hover effect** - subtle zoom on image when hovering ready instruments
+- **Fallback** - cards without images display ASCII visual as before
+
+### Changed
+- **SYNTH renamed to UEBERWELLE** - with dedicated instrument artwork
+- **Playlist replaced by Composer** - set builder replaces the Deep Focus Playlist card
+- **Composer full-width layout** - spans entire content area (1200px max)
 
 ---
 

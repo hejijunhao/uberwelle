@@ -6,6 +6,7 @@ export interface InstrumentCardProps {
   name: string
   description: string
   status: 'ready' | 'coming'
+  image?: string
   visual?: React.ReactNode
   onClick?: () => void
 }
@@ -15,6 +16,7 @@ export function InstrumentCard({
   name,
   description,
   status,
+  image,
   visual,
   onClick,
 }: InstrumentCardProps) {
@@ -27,28 +29,36 @@ export function InstrumentCard({
       disabled={!isReady}
       type="button"
     >
-      <div className="instrument-card__header">
-        <span className="instrument-card__number">[{number}]</span>
-        <span className={`instrument-card__status ${isReady ? 'instrument-card__status--ready' : ''}`}>
-          {isReady ? 'READY' : 'COMING'}
-        </span>
+      {image && (
+        <div className="instrument-card__image">
+          <img src={image} alt={name} />
+        </div>
+      )}
+
+      <div className="instrument-card__content">
+        <div className="instrument-card__header">
+          <span className="instrument-card__number">[{number}]</span>
+          <span className={`instrument-card__status ${isReady ? 'instrument-card__status--ready' : ''}`}>
+            {isReady ? 'READY' : 'COMING'}
+          </span>
+        </div>
+
+        <h3 className="instrument-card__name">{name}</h3>
+
+        {!image && visual && (
+          <div className="instrument-card__visual">
+            {visual}
+          </div>
+        )}
+
+        <p className="instrument-card__description">{description}</p>
+
+        {isReady && (
+          <div className="instrument-card__cta">
+            LAUNCH →
+          </div>
+        )}
       </div>
-
-      <h3 className="instrument-card__name">{name}</h3>
-
-      {visual && (
-        <div className="instrument-card__visual">
-          {visual}
-        </div>
-      )}
-
-      <p className="instrument-card__description">{description}</p>
-
-      {isReady && (
-        <div className="instrument-card__cta">
-          LAUNCH →
-        </div>
-      )}
     </button>
   )
 }
