@@ -1,0 +1,1 @@
+Take a look at the CLAUDE.md file, our docs/ directory, and our project directory to get a better understanding of the project structure and what it is we're building.

@@ -1,0 +1,106 @@
+.instrument-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-gray-800);
+  text-align: left;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 180px;
+}
+
+.instrument-card:focus {
+  outline: 1px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/* Ready state */
+.instrument-card--ready:hover {
+  border-color: var(--color-white);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.instrument-card--ready:active {
+  transform: scale(0.98);
+}
+
+/* Coming soon state */
+.instrument-card--coming {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.instrument-card--coming:hover {
+  opacity: 0.6;
+}
+
+/* Header row */
+.instrument-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.instrument-card__number {
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+}
+
+.instrument-card__status {
+  font-size: var(--text-2xs);
+  color: var(--color-gray-600);
+  letter-spacing: 0.1em;
+}
+
+.instrument-card__status--ready {
+  color: var(--color-white);
+}
+
+/* Name */
+.instrument-card__name {
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-white);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+/* Visual / ASCII art area */
+.instrument-card__visual {
+  font-size: var(--text-xs);
+  color: var(--color-gray-400);
+  font-family: var(--font-mono);
+  line-height: 1.2;
+  white-space: pre;
+  padding: var(--space-2) 0;
+}
+
+.instrument-card--ready .instrument-card__visual {
+  color: var(--color-white);
+}
+
+/* Description */
+.instrument-card__description {
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* CTA */
+.instrument-card__cta {
+  font-size: var(--text-xs);
+  color: var(--color-gray-400);
+  letter-spacing: 0.1em;
+  margin-top: auto;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-gray-800);
+  transition: color var(--transition-fast);
+}
+
+.instrument-card--ready:hover .instrument-card__cta {
+  color: var(--color-white);
+}

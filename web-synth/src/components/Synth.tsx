@@ -27,7 +27,11 @@ const LFO_TARGET_OPTIONS: { value: LfoTarget; label: string }[] = [
   { value: 'amplitude', label: 'AMP' },
 ]
 
-export function Synth() {
+interface SynthProps {
+  onBack?: () => void
+}
+
+export function Synth({ onBack }: SynthProps) {
   const {
     waveform,
     detune,
@@ -72,6 +76,11 @@ export function Synth() {
   return (
     <div className="synth-root">
       <header className="page-header">
+        {onBack && (
+          <button className="back-button" onClick={onBack} type="button">
+            ← BACK
+          </button>
+        )}
         <h1 className="brand">Motherboard Instruments</h1>
       </header>
 
