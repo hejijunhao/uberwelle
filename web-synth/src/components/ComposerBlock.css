@@ -79,3 +79,23 @@
   right: 0;
   height: 3px;
 }
+
+/* Playing state */
+.composer-block--playing {
+  animation: pulse-glow 1.5s ease-in-out infinite;
+  border-color: var(--block-color, var(--color-accent)) !important;
+  box-shadow: 0 0 12px var(--block-color, var(--color-accent));
+}
+
+.composer-block--playing .composer-block__number {
+  color: var(--color-white);
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 8px var(--block-color, var(--color-accent));
+  }
+  50% {
+    box-shadow: 0 0 16px var(--block-color, var(--color-accent));
+  }
+}

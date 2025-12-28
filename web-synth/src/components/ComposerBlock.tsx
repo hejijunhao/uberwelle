@@ -12,6 +12,7 @@ export interface ComposerBlockProps {
   block: BlockData
   index: number
   isActive: boolean
+  isPlaying?: boolean
   onClick: () => void
 }
 
@@ -26,12 +27,19 @@ const STYLE_COLORS: Record<string, string> = {
   breaks: 'var(--color-style-breaks)',
 }
 
-export function ComposerBlock({ block, index, isActive, onClick }: ComposerBlockProps) {
+export function ComposerBlock({ block, index, isActive, isPlaying, onClick }: ComposerBlockProps) {
   const styleColor = block.configured ? STYLE_COLORS[block.style] || 'var(--color-gray-500)' : undefined
+
+  const classNames = [
+    'composer-block',
+    isActive && 'composer-block--active',
+    isPlaying && 'composer-block--playing',
+    block.configured && 'composer-block--configured',
+  ].filter(Boolean).join(' ')
 
   return (
     <button
-      className={`composer-block ${isActive ? 'composer-block--active' : ''} ${block.configured ? 'composer-block--configured' : ''}`}
+      className={classNames}
       onClick={onClick}
       type="button"
       style={block.configured ? {

@@ -1,0 +1,116 @@
+/**
+ * SetPlayerControls Styles
+ *
+ * Brutalist transport controls matching the Composer aesthetic.
+ */
+
+.set-player-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-gray-900);
+  border: 1px solid var(--color-gray-700);
+  margin-top: var(--space-4);
+}
+
+/* Transport buttons row */
+.set-player-controls__transport {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.transport-btn {
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-gray-800);
+  border: 1px solid var(--color-gray-600);
+  color: var(--color-gray-100);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.transport-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
+}
+
+.transport-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.transport-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.transport-btn--active {
+  background: var(--color-accent);
+  color: var(--color-gray-900);
+  border-color: var(--color-accent);
+}
+
+.transport-btn--active:hover {
+  background: var(--color-accent);
+  filter: brightness(1.1);
+}
+
+/* Progress section */
+.set-player-controls__progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.set-player-controls__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.set-player-controls__block-indicator {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-white);
+  letter-spacing: 0.1em;
+}
+
+.set-player-controls__time {
+  font-size: var(--text-sm);
+  color: var(--color-gray-400);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Progress bar */
+.set-player-controls__progress-bar {
+  height: 4px;
+  background: var(--color-gray-700);
+  overflow: hidden;
+}
+
+.set-player-controls__progress-fill {
+  height: 100%;
+  transition: width 100ms linear;
+}
+
+/* Style info */
+.set-player-controls__style-info {
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .set-player-controls__transport {
+    flex-wrap: wrap;
+  }
+
+  .transport-btn {
+    flex: 1 1 auto;
+    min-width: 80px;
+  }
+}

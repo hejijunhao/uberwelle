@@ -10,10 +10,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- **Composer UI Controls** - Play/Pause/Stop/Skip transport, progress bar, block indicator
 - Oscilloscope visualization using AnalyserNode
 - Preset system for saving/loading sound configurations
 - Effects chain (Reverb, Delay)
+- Keyboard shortcuts for transport (Space = play/pause, Escape = stop)
+- Block click-to-jump during playback
+
+---
+
+## [1.4.0] - 2025-12-28
+
+> Composer UI Controls - Full transport and playback integration.
+
+### Added
+
+#### Transport Controls (`src/components/SetPlayerControls.tsx`)
+- **Play/Pause toggle** - Single button that switches between play and pause states
+- **Stop button** - Resets playback to beginning of set
+- **Skip button** - Jump to next block in the set
+- **Progress bar** - Visual progress indicator colored by current style
+- **Time display** - Elapsed / total time (e.g., "2:34 / 5:00")
+- **Block indicator** - "BLOCK X/Y" showing current position in set
+- **Style & BPM display** - Current style name and tempo, color-coded
+
+#### React Integration (`src/hooks/useSetPlayer.ts`)
+- **useSetPlayer hook** - Wraps SetPlayer singleton with reactive state
+- **State subscriptions** - Automatic UI updates on playback state changes
+- **Helper functions** - `formatTime()`, `getElapsedSeconds()` for display
+- **Current block info** - Exposes `currentBlock`, `currentStyle`, `currentBpm`
+
+#### Composer Enhancements
+- **BUILD SET wiring** - Button now loads configured blocks into audio engine
+- **REBUILD SET** - Button text updates when set is already loaded
+- **RESET button** - Stop and clear current set
+- **Playing block highlight** - Currently playing block pulses with style-colored glow
+- **Block index mapping** - Maps SetPlayer indices back to UI grid positions
+
+### Changed
+- `Composer.tsx` - Integrated `useSetPlayer` hook and `SetPlayerControls`
+- `ComposerBlock.tsx` - Added `isPlaying` prop for visual feedback
+- `ComposerBlock.css` - Added `pulse-glow` animation keyframes
+- `Composer.css` - Added actions container and reset button styles
+
+### Technical Notes
+- Controls only appear after BUILD SET is clicked (`isLoaded` state)
+- Progress bar color dynamically matches the current block's style
+- Block highlighting uses CSS custom properties for style-specific colors
+- Transport buttons disable appropriately based on playback state
+
+### Documentation
+- `docs/phase-6-ui-controls.md` - Updated from "Planned" to "Implemented" with full implementation notes
 
 ---
 
@@ -101,7 +147,7 @@ Each style defines:
 - `docs/phase-1-audio-foundation.md` - Clock and drum synth details
 - `docs/phase-2-pattern-engine.md` - Style definitions and pattern player
 - `docs/phase-3-5-synths-and-players.md` - Synths and orchestration layer
-- `docs/phase-6-ui-controls.md` - Planned UI integration
+- `docs/phase-6-ui-controls.md` - UI integration plan (implemented in v1.4.0)
 
 ---
 
