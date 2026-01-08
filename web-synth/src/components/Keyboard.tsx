@@ -79,6 +79,15 @@ export function Keyboard({ notes, onNoteDown, onNoteUp }: KeyboardProps) {
           onMouseLeave={() => {
             if (activeNotes.has(note.id)) handleNoteUp(note.id)
           }}
+          onTouchStart={(e) => {
+            e.preventDefault()
+            handleNoteDown(note)
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault()
+            handleNoteUp(note.id)
+          }}
+          onTouchCancel={() => handleNoteUp(note.id)}
         >
           <span className="key-label">{note.label}</span>
         </button>

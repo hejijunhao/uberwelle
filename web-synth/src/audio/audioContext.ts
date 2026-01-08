@@ -1,8 +1,11 @@
 let audioCtx: AudioContext | null = null
 
+// Support older iOS Safari versions that use webkitAudioContext
+const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+
 export function getAudioContext(): AudioContext {
   if (!audioCtx) {
-    audioCtx = new AudioContext()
+    audioCtx = new AudioContextClass()
   }
   return audioCtx
 }

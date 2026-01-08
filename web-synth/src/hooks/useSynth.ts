@@ -142,16 +142,18 @@ export function useSynth() {
   }, [])
 
   // ─── Note Handling ───────────────────────────────────────────────────────
-  const ensureContext = useCallback(() => {
+  const ensureContext = useCallback(async () => {
     const ctx = getAudioContext()
+    // iOS Safari requires resume() to be called in response to user gesture
+    // and we need to await it to ensure audio works
     if (ctx.state === 'suspended') {
-      ctx.resume()
+      await ctx.resume()
     }
   }, [])
 
   const noteOn = useCallback(
-    (noteId: string, frequency: number) => {
-      ensureContext()
+    async (noteId: string, frequency: number) => {
+      await ensureContext()
       engineRef.current?.noteOn(noteId, frequency)
     },
     [ensureContext]
