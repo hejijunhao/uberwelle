@@ -23,9 +23,27 @@ export const styleVariations = {
   techno: technoVariations,
 }
 
-// Get style by name (with fallback)
+// Map UI style names to audio engine style names
+// UI uses user-friendly names, audio engine uses internal names
+const styleNameMap: Record<string, string> = {
+  // Direct matches
+  deepHouse: 'deepHouse',
+  progressiveHouse: 'progressiveHouse',
+  techno: 'techno',
+  // UI aliases → audio engine styles
+  house: 'deepHouse',
+  ambient: 'progressiveHouse',  // Progressive has smoother, pad-heavy sound
+  jazz: 'deepHouse',            // Deep house has jazzy chord progressions
+  experimental: 'techno',       // Techno is more experimental/driving
+  drone: 'progressiveHouse',    // Progressive works for droney textures
+  minimal: 'techno',            // Techno is inherently minimal
+  breaks: 'deepHouse',          // Deep house has syncopated patterns
+}
+
+// Get style by name (with alias mapping and fallback)
 export function getStyle(name: string): StyleDefinition {
-  return styles[name] || styles.deepHouse
+  const mappedName = styleNameMap[name] || name
+  return styles[mappedName] || styles.deepHouse
 }
 
 // Get default BPM for a style

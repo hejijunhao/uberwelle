@@ -18,6 +18,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.1] - 2025-01-25
+
+> Composer style selection fix.
+
+### Fixed
+- **Style selection now works** - Composer blocks were always playing Deep House regardless of selected style due to mismatched style names between UI and audio engine
+- Added style name mapping in `styles/index.ts` to translate UI names (`house`, `ambient`, `minimal`, etc.) to audio engine styles (`deepHouse`, `progressiveHouse`, `techno`)
+
+---
+
 ## [1.4.0] - 2025-12-28
 
 > Composer UI Controls - Full transport and playback integration.
